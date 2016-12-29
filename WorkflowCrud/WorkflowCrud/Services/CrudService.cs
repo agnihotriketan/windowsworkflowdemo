@@ -2,24 +2,26 @@
 
 namespace WorkflowCrud.Services
 {
-    public class CrudService
+    public static class CrudService
     {
-        public bool UpdateWatchList(bool status)
+        public static string UpdateWatchList()
         {
             Console.WriteLine("UpdateWatchList");
-            
-            return true;
+            //todo call update service
+            return "AwaitingApproval";
         }
 
-        public bool RemovalWatchList(bool status)
+        public static bool RemovalWatchList()
         {
             Console.WriteLine("RemovalWatchList");
+            //todo call remove service
             return true;
         }
 
-        public bool RemovalCompleted(bool status)
+        public static bool RemovalCompleted()
         {
             Console.WriteLine("RemovalCompleted");
+            //todo call remove complete
             return true;
         }
     }
