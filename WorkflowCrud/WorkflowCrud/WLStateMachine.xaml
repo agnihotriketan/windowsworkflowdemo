@@ -167,11 +167,13 @@
                               </State>
                             </Transition.To>
                           </Transition>
-                          <Transition DisplayName="T6" To="{x:Reference __ReferenceID0}">
+                          <Transition DisplayName="T6" sap2010:WorkflowViewState.IdRef="Transition_7" To="{x:Reference __ReferenceID0}">
+                            <Transition.Action>
+                              <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_8" Text="Going back to previous state" />
+                            </Transition.Action>
                             <Transition.Condition>
                               <mca:CSharpValue x:TypeArguments="x:Boolean">wlremovestatus != "Completed"</mca:CSharpValue>
                             </Transition.Condition>
-                            <sap2010:WorkflowViewState.IdRef>Transition_7</sap2010:WorkflowViewState.IdRef>
                           </Transition>
                         </State.Transitions>
                         <State.Variables>
@@ -193,6 +195,9 @@
                     </Transition.Condition>
                   </Transition>
                   <Transition DisplayName="T4" sap2010:WorkflowViewState.IdRef="Transition_6" To="{x:Reference __ReferenceID1}">
+                    <Transition.Action>
+                      <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_9" Text="Going back to previous state" />
+                    </Transition.Action>
                     <Transition.Condition>
                       <mca:CSharpValue x:TypeArguments="x:Boolean">wlupdatestatus != "Completed"</mca:CSharpValue>
                     </Transition.Condition>
@@ -205,6 +210,9 @@
             </Transition.To>
           </Transition>
           <Transition DisplayName="T5" sap2010:WorkflowViewState.IdRef="Transition_5" To="{x:Reference __ReferenceID2}">
+            <Transition.Action>
+              <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_10" Text="Going back to previous state" />
+            </Transition.Action>
             <Transition.Condition>
               <mca:CSharpValue x:TypeArguments="x:Boolean">wlupdatestatus != "Completed"</mca:CSharpValue>
             </Transition.Condition>
@@ -221,7 +229,7 @@
       <Variable x:TypeArguments="x:String" Name="wlupdatestatus" />
       <Variable x:TypeArguments="x:String" Name="wlremovestatus" />
     </StateMachine.Variables>
-    <sads:DebugSymbol.Symbol>d1NEOlxCdXNpbmVzc1xLZW1hbFx3aW5kb3dzd29ya2Zsb3dkZW1vXFdvcmtmbG93Q3J1ZFxXb3JrZmxvd0NydWRcV0xTdGF0ZU1hY2hpbmUueGFtbCwsA+EBEgIBAS4H1QEPAgFjowEfpwEnAgFffBe0AR8CATtLD8wBFwIBAjALMF8CAXozC0MWAgFuSA9IaQIBadEBD9EBawIBZaUBI6UBiAECAWF+G5sBIAIBSKABH6ABeQIBQqwBH6wBewIBPU0TdxgCARXAARfAAXECAQ+3ARe9ASYCAQnFARfFAXMCAQQwSTBcAgF7NA09FgIBdD4NQhkCAW+lAWGlAYUBAgFigQEhgQF9AgFJhQEfiwEuAgFZjgEfmQEoAgFOUBlQdQIBFlQXciICAR11F3VtAgEbugEdugFsAgEKOzg7QgIBeTcTN2ECAXVAEUBXAgFwiAEliAF0AgFalgEllgFxAgFUkQElkQFzAgFPVRlbKAIBNVwZYCUCAS9hGWwiAgEkbRlxJQIBHnVVdWoCARxYH1huAgE2Xh1eZAIBMGkfaWYCASpkH2RtAgElbx1vdAIBHw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1NEOlxCdXNpbmVzc1xLZW1hbFx3aW5kb3dzd29ya2Zsb3dkZW1vXFdvcmtmbG93Q3J1ZFxXb3JrZmxvd0NydWRcV0xTdGF0ZU1hY2hpbmUueGFtbDIsA+kBEgIBAS4H3QEPAgFnowEfpwEnAgFjfBe2AR8CAT1LD9EBFwIBAjALMF8DAYABMwtDFgIBdEgPSGkCAW/ZAQ/ZAWsCAWvWAQ/WAW8CAWmlASOlAYgBAgFlfhubASACAUygAR+gAXkCAUavAR+vAXsCAUGsAR+sAX4CAT9NE3cYAgEXwgEXwgFxAgERuQEXvwEmAgELygEXygFzAgEGxwEXxwF2AgEEMEkwXAMBgQE0DT0WAgF6Pg1CGQIBddYBTtYBbAIBaqUBYaUBhQECAWaBASGBAX0CAU2FAR+LAS4CAV2OAR+ZASgCAVKsAV2sAXsCAUBQGVB1AgEYVBdyIgIBH3UXdW0CAR28AR28AWwCAQzHAVXHAXMCAQU7ODtCAgF/NxM3YQIBe0ARQFcCAXaIASWIAXQCAV6WASWWAXECAViRASWRAXMCAVNVGVsoAgE3XBlgJQIBMWEZbCICASZtGXElAgEgdVV1agIBHlgfWG4CATheHV5kAgEyaR9pZgIBLGQfZG0CASdvHW90AgEh</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -270,7 +278,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transition_1" sap:VirtualizedContainerService.HintSize="430,796">
+      <sap2010:ViewStateData Id="Transition_1" sap:VirtualizedContainerService.HintSize="430,800">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:PointCollection x:Key="ConnectorLocation">428,418 428,491.5 12.5,491.5 12.5,341.5 130,341.5 130,371.5</av:PointCollection>
@@ -279,11 +287,14 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transition_7">
+      <sap2010:ViewStateData Id="WriteLine_8" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="Transition_7" sap:VirtualizedContainerService.HintSize="430,535">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:PointCollection x:Key="ConnectorLocation">428,418 0,0</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">428,418 428,448 420,448 420,418</av:PointCollection>
+            <x:Int32 x:Key="SrcConnectionPointIndex">43</x:Int32>
+            <x:Int32 x:Key="DestConnectionPointIndex">39</x:Int32>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -308,7 +319,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transition_6">
+      <sap2010:ViewStateData Id="WriteLine_9" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="Transition_6" sap:VirtualizedContainerService.HintSize="430,535">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -336,7 +348,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transition_5">
+      <sap2010:ViewStateData Id="WriteLine_10" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="Transition_5" sap:VirtualizedContainerService.HintSize="430,535">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
