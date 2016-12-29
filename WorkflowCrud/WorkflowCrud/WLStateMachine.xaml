@@ -43,10 +43,42 @@
   <StateMachine sap2010:WorkflowViewState.IdRef="StateMachine_1">
     <StateMachine.InitialState>
       <State x:Name="__ReferenceID0" DisplayName="CreateWL" sap2010:WorkflowViewState.IdRef="State_3">
+        <State.Entry>
+          <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="In CreateWL state" />
+        </State.Entry>
+        <State.Exit>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
+            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="Out CreateWL state" />
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">
+                  <mca:CSharpReference x:TypeArguments="x:String">status</mca:CSharpReference>
+                </OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">inProgress</InArgument>
+              </Assign.Value>
+            </Assign>
+            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_4">
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">status</mca:CSharpValue>
+              </InArgument>
+            </WriteLine>
+          </Sequence>
+        </State.Exit>
         <State.Transitions>
           <Transition DisplayName="T1" sap2010:WorkflowViewState.IdRef="Transition_2">
             <Transition.To>
               <State x:Name="__ReferenceID3" DisplayName="UpdateWL" sap2010:WorkflowViewState.IdRef="State_4">
+                <State.Entry>
+                  <If sap2010:WorkflowViewState.IdRef="If_1">
+                    <If.Condition>
+                      <InArgument x:TypeArguments="x:Boolean">
+                        <mca:CSharpValue x:TypeArguments="x:Boolean">status=="inprogress"</mca:CSharpValue>
+                      </InArgument>
+                    </If.Condition>
+                  </If>
+                </State.Entry>
                 <State.Transitions>
                   <Transition DisplayName="T3" sap2010:WorkflowViewState.IdRef="Transition_3">
                     <Transition.To>
@@ -56,11 +88,7 @@
                             <Transition.To>
                               <State x:Name="__ReferenceID1" DisplayName="DisposeContext" sap2010:WorkflowViewState.IdRef="State_1" IsFinal="True">
                                 <State.Entry>
-                                  <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1">
-                                    <InArgument x:TypeArguments="x:String">
-                                      <mca:CSharpValue x:TypeArguments="x:String">Console.WriteLine("Disposed");</mca:CSharpValue>
-                                    </InArgument>
-                                  </WriteLine>
+                                  <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="Disposed" />
                                 </State.Entry>
                               </State>
                             </Transition.To>
@@ -80,12 +108,27 @@
     <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
-    <sads:DebugSymbol.Symbol>d1NEOlxCdXNpbmVzc1xLZW1hbFx3aW5kb3dzd29ya2Zsb3dkZW1vXFdvcmtmbG93Q3J1ZFxXb3JrZmxvd0NydWRcV0xTdGF0ZU1hY2hpbmUueGFtbAcrA1QSAgEBLQdNDwIBDDkfQScCAQg1F0UfAgEFMQ9JFwIBAjsjPy8CAQo9Jz2DAQIBCw==</sads:DebugSymbol.Symbol>
+    <StateMachine.Variables>
+      <Variable x:TypeArguments="x:String" Name="status" />
+    </StateMachine.Variables>
+    <sads:DebugSymbol.Symbol>d1NEOlxCdXNpbmVzc1xLZW1hbFx3aW5kb3dzd29ya2Zsb3dkZW1vXFdvcmtmbG93Q3J1ZFxXb3JrZmxvd0NydWRcV0xTdGF0ZU1hY2hpbmUueGFtbBMrA3MSAgEBLQdpDwIBD1kfXScCAQtVF2EfAgEISA9lFwIBAi8LL18CARwyC0MWAgESWyNbbgIBDUoTUBgCAQUvSS9cAgEdMw0zYgIBGjQNPRYCARY+DUIZAgETW2FbawIBDk0ZTWwCAQYzSzNfAgEbOzg7QgIBGTcTN18CARdAEUBVAgEU</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="210,61" />
-      <sap2010:ViewStateData Id="State_1" sap:VirtualizedContainerService.HintSize="326,223">
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="WriteLine_3" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="264,390">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,210" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="State_1" sap:VirtualizedContainerService.HintSize="175,97">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">202.5,391.5</av:Point>
@@ -125,7 +168,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="114,61">
+      <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="490,572">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">353,149.5</av:Point>
@@ -143,7 +186,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_3" sap:VirtualizedContainerService.HintSize="114,61">
+      <sap2010:ViewStateData Id="State_3" sap:VirtualizedContainerService.HintSize="326,752">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">50,80</av:Point>
