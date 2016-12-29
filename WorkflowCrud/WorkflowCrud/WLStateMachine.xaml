@@ -43,13 +43,12 @@
   </TextExpression.ReferencesForImplementation>
   <StateMachine sap2010:WorkflowViewState.IdRef="StateMachine_1">
     <StateMachine.InitialState>
-      <State x:Name="__ReferenceID0" DisplayName="CreateWL" sap2010:WorkflowViewState.IdRef="State_3">
+      <State x:Name="__ReferenceID2" DisplayName="CreateWL" sap2010:WorkflowViewState.IdRef="State_3">
         <State.Entry>
           <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="In CreateWL state" />
         </State.Entry>
         <State.Exit>
           <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
-            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="Out CreateWL state" />
             <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
               <Assign.To>
                 <OutArgument x:TypeArguments="x:String">
@@ -69,13 +68,16 @@
         </State.Exit>
         <State.Transitions>
           <Transition DisplayName="T1" sap2010:WorkflowViewState.IdRef="Transition_2">
+            <Transition.Condition>
+              <mca:CSharpValue x:TypeArguments="x:Boolean">wlupdatestatus=="Completed"</mca:CSharpValue>
+            </Transition.Condition>
             <Transition.To>
-              <State x:Name="__ReferenceID3" DisplayName="UpdateWL" sap2010:WorkflowViewState.IdRef="State_4">
+              <State x:Name="__ReferenceID1" DisplayName="UpdateWL" sap2010:WorkflowViewState.IdRef="State_4">
                 <State.Entry>
                   <If sap2010:WorkflowViewState.IdRef="If_1">
                     <If.Condition>
                       <InArgument x:TypeArguments="x:Boolean">
-                        <mca:CSharpValue x:TypeArguments="x:Boolean">wlstatus=="inProgress"</mca:CSharpValue>
+                        <mca:CSharpValue x:TypeArguments="x:Boolean">wlupdatestatus != "Completed"</mca:CSharpValue>
                       </InArgument>
                     </If.Condition>
                     <If.Then>
@@ -111,25 +113,89 @@
                         </WriteLine>
                       </Sequence>
                     </If.Then>
+                    <If.Else>
+                      <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_7" Text="continue Same State" />
+                    </If.Else>
                   </If>
                 </State.Entry>
                 <State.Transitions>
                   <Transition DisplayName="T3" sap2010:WorkflowViewState.IdRef="Transition_3">
                     <Transition.To>
-                      <State x:Name="__ReferenceID2" DisplayName="RemoveWL" sap2010:WorkflowViewState.IdRef="State_2">
+                      <State x:Name="__ReferenceID0" DisplayName="RemoveWL" sap2010:WorkflowViewState.IdRef="State_2">
+                        <State.Entry>
+                          <If sap2010:WorkflowViewState.IdRef="If_2">
+                            <If.Condition>
+                              <InArgument x:TypeArguments="x:Boolean">
+                                <mca:CSharpValue x:TypeArguments="x:Boolean">wlremovestatus == "Completed"</mca:CSharpValue>
+                              </InArgument>
+                            </If.Condition>
+                            <If.Then>
+                              <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_2" MethodName="RemovalWatchList" TargetType="local:CrudService">
+                                <InvokeMethod.Result>
+                                  <OutArgument x:TypeArguments="x:String">
+                                    <mca:CSharpReference x:TypeArguments="x:String">removeOut</mca:CSharpReference>
+                                  </OutArgument>
+                                </InvokeMethod.Result>
+                              </InvokeMethod>
+                            </If.Then>
+                            <If.Else>
+                              <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">
+                                    <mca:CSharpReference x:TypeArguments="x:String">wlstatus</mca:CSharpReference>
+                                  </OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">
+                                    <mca:CSharpValue x:TypeArguments="x:String">wlremovestatus</mca:CSharpValue>
+                                  </InArgument>
+                                </Assign.Value>
+                              </Assign>
+                            </If.Else>
+                          </If>
+                        </State.Entry>
                         <State.Transitions>
                           <Transition DisplayName="T2" sap2010:WorkflowViewState.IdRef="Transition_1">
+                            <Transition.Condition>
+                              <mca:CSharpValue x:TypeArguments="x:Boolean">wlremovestatus=="Completed"</mca:CSharpValue>
+                            </Transition.Condition>
                             <Transition.To>
-                              <State x:Name="__ReferenceID1" DisplayName="DisposeContext" sap2010:WorkflowViewState.IdRef="State_1" IsFinal="True">
+                              <State x:Name="__ReferenceID3" DisplayName="DisposeContext" sap2010:WorkflowViewState.IdRef="State_1" IsFinal="True">
                                 <State.Entry>
                                   <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="----- State Machine Disposed -----" />
                                 </State.Entry>
                               </State>
                             </Transition.To>
                           </Transition>
+                          <Transition DisplayName="T6" To="{x:Reference __ReferenceID0}">
+                            <Transition.Condition>
+                              <mca:CSharpValue x:TypeArguments="x:Boolean">wlremovestatus != "Completed"</mca:CSharpValue>
+                            </Transition.Condition>
+                            <sap2010:WorkflowViewState.IdRef>Transition_7</sap2010:WorkflowViewState.IdRef>
+                          </Transition>
                         </State.Transitions>
+                        <State.Variables>
+                          <Variable x:TypeArguments="x:String" Name="removeOut" />
+                        </State.Variables>
                       </State>
                     </Transition.To>
+                    <Transition.Action>
+                      <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_3" MethodName="UpdateWatchList" TargetType="local:CrudService">
+                        <InvokeMethod.Result>
+                          <OutArgument x:TypeArguments="x:String">
+                            <mca:CSharpReference x:TypeArguments="x:String">updateOut</mca:CSharpReference>
+                          </OutArgument>
+                        </InvokeMethod.Result>
+                      </InvokeMethod>
+                    </Transition.Action>
+                    <Transition.Condition>
+                      <mca:CSharpValue x:TypeArguments="x:Boolean">wlupdatestatus=="Completed"</mca:CSharpValue>
+                    </Transition.Condition>
+                  </Transition>
+                  <Transition DisplayName="T4" sap2010:WorkflowViewState.IdRef="Transition_6" To="{x:Reference __ReferenceID1}">
+                    <Transition.Condition>
+                      <mca:CSharpValue x:TypeArguments="x:Boolean">wlupdatestatus != "Completed"</mca:CSharpValue>
+                    </Transition.Condition>
                   </Transition>
                 </State.Transitions>
                 <State.Variables>
@@ -138,25 +204,31 @@
               </State>
             </Transition.To>
           </Transition>
+          <Transition DisplayName="T5" sap2010:WorkflowViewState.IdRef="Transition_5" To="{x:Reference __ReferenceID2}">
+            <Transition.Condition>
+              <mca:CSharpValue x:TypeArguments="x:Boolean">wlupdatestatus != "Completed"</mca:CSharpValue>
+            </Transition.Condition>
+          </Transition>
         </State.Transitions>
       </State>
     </StateMachine.InitialState>
-    <x:Reference>__ReferenceID0</x:Reference>
-    <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
+    <x:Reference>__ReferenceID0</x:Reference>
+    <x:Reference>__ReferenceID1</x:Reference>
     <StateMachine.Variables>
       <Variable x:TypeArguments="x:String" Name="wlstatus" />
+      <Variable x:TypeArguments="x:String" Name="wlupdatestatus" />
+      <Variable x:TypeArguments="x:String" Name="wlremovestatus" />
     </StateMachine.Variables>
-    <sads:DebugSymbol.Symbol>d1NEOlxCdXNpbmVzc1xLZW1hbFx3aW5kb3dzd29ya2Zsb3dkZW1vXFdvcmtmbG93Q3J1ZFxXb3JrZmxvd0NydWRcV0xTdGF0ZU1hY2hpbmUueGFtbB0sA5gBEgIBAS4HjgEPAgEkex9/JwIBIHcXgwEfAgEdSQ+KARcCAQIwCzBfAgExMwtEFgIBJ30jfYgBAgEiSxNyGAIBBTBJMFwCATI0DTRiAgEvNQ0+FgIBKz8NQxkCASh9YX2FAQIBI04ZTm4CAQZSF3AiAgEJNEs0XwIBMDw4PEICAS44EzhhAgEsQRFBVwIBKVMZWSgCARlaGV4lAgEVXxlqIgIBDmsZbyUCAQpWH1ZuAgEaXB1cZAIBFmcfZ2YCARJiH2JtAgEPbR1tdAIBCw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1NEOlxCdXNpbmVzc1xLZW1hbFx3aW5kb3dzd29ya2Zsb3dkZW1vXFdvcmtmbG93Q3J1ZFxXb3JrZmxvd0NydWRcV0xTdGF0ZU1hY2hpbmUueGFtbCwsA+EBEgIBAS4H1QEPAgFjowEfpwEnAgFffBe0AR8CATtLD8wBFwIBAjALMF8CAXozC0MWAgFuSA9IaQIBadEBD9EBawIBZaUBI6UBiAECAWF+G5sBIAIBSKABH6ABeQIBQqwBH6wBewIBPU0TdxgCARXAARfAAXECAQ+3ARe9ASYCAQnFARfFAXMCAQQwSTBcAgF7NA09FgIBdD4NQhkCAW+lAWGlAYUBAgFigQEhgQF9AgFJhQEfiwEuAgFZjgEfmQEoAgFOUBlQdQIBFlQXciICAR11F3VtAgEbugEdugFsAgEKOzg7QgIBeTcTN2ECAXVAEUBXAgFwiAEliAF0AgFalgEllgFxAgFUkQElkQFzAgFPVRlbKAIBNVwZYCUCAS9hGWwiAgEkbRlxJQIBHnVVdWoCARxYH1huAgE2Xh1eZAIBMGkfaWYCASpkH2RtAgElbx1vdAIBHw==</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="210,62" />
-      <sap2010:ViewStateData Id="WriteLine_3" sap:VirtualizedContainerService.HintSize="242,62" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="242,62" />
       <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="264,390">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="264,288">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -174,12 +246,23 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,710" />
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="210,62" />
-      <sap2010:ViewStateData Id="State_1" sap:VirtualizedContainerService.HintSize="326,223">
+      <sap2010:ViewStateData Id="WriteLine_7" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">92.5,391.5</av:Point>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_2" sap:VirtualizedContainerService.HintSize="218,130" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="485,280" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="State_1" sap:VirtualizedContainerService.HintSize="175,97">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">42.5,371.5</av:Point>
             <av:Size x:Key="ShapeSize">175,97</av:Size>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
             <x:Double x:Key="StateContainerWidth">161</x:Double>
@@ -187,19 +270,27 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transition_1">
+      <sap2010:ViewStateData Id="Transition_1" sap:VirtualizedContainerService.HintSize="430,796">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:PointCollection x:Key="ConnectorLocation">398,358 398,388 180,388 180,391.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">428,418 428,491.5 12.5,491.5 12.5,341.5 130,341.5 130,371.5</av:PointCollection>
             <x:Int32 x:Key="SrcConnectionPointIndex">43</x:Int32>
             <x:Int32 x:Key="DestConnectionPointIndex">38</x:Int32>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Transition_7">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:PointCollection x:Key="ConnectorLocation">428,418 0,0</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="State_2" sap:VirtualizedContainerService.HintSize="160,76">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">310,282</av:Point>
+            <av:Point x:Key="ShapeLocation">340,342</av:Point>
             <av:Size x:Key="ShapeSize">160,76</av:Size>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
             <x:Double x:Key="StateContainerWidth">146</x:Double>
@@ -207,37 +298,58 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transition_3">
+      <sap2010:ViewStateData Id="InvokeMethod_3" sap:VirtualizedContainerService.HintSize="218,130" />
+      <sap2010:ViewStateData Id="Transition_3" sap:VirtualizedContainerService.HintSize="430,820">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:PointCollection x:Key="ConnectorLocation">427.1,210.5 427.1,240.5 390,240.5 390,282</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">477.1,200.5 477.1,230.5 420,230.5 420,342</av:PointCollection>
             <x:Int32 x:Key="SrcConnectionPointIndex">51</x:Int32>
             <x:Int32 x:Key="DestConnectionPointIndex">38</x:Int32>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Transition_6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:PointCollection x:Key="ConnectorLocation">477.1,200.5 477.1,230.5 482.8,230.5 482.8,200.5</av:PointCollection>
+            <x:Int32 x:Key="SrcConnectionPointIndex">51</x:Int32>
+            <x:Int32 x:Key="DestConnectionPointIndex">55</x:Int32>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="114,61">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">353,149.5</av:Point>
+            <av:Point x:Key="ShapeLocation">403,139.5</av:Point>
             <av:Size x:Key="ShapeSize">114,61</av:Size>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transition_2">
+      <sap2010:ViewStateData Id="Transition_2" sap:VirtualizedContainerService.HintSize="430,800">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:PointCollection x:Key="ConnectorLocation">112.7,141 112.7,176.95 353,176.95</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">135.7,140.5 135.7,166.95 403,166.95</av:PointCollection>
             <x:Int32 x:Key="SrcConnectionPointIndex">43</x:Int32>
             <x:Int32 x:Key="DestConnectionPointIndex">33</x:Int32>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Transition_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:PointCollection x:Key="ConnectorLocation">135.7,140.5 135.7,170.5 130,170.5 130,140.5</av:PointCollection>
+            <x:Int32 x:Key="SrcConnectionPointIndex">43</x:Int32>
+            <x:Int32 x:Key="DestConnectionPointIndex">39</x:Int32>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="State_3" sap:VirtualizedContainerService.HintSize="114,61">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">50,80</av:Point>
+            <av:Point x:Key="ShapeLocation">73,79.5</av:Point>
             <av:Size x:Key="ShapeSize">114,61</av:Size>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
@@ -250,7 +362,7 @@
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
             <x:Double x:Key="StateContainerWidth">600</x:Double>
             <x:Double x:Key="StateContainerHeight">600</x:Double>
-            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,110.5 164,110.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">273,77.5 273,110 187,110</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>

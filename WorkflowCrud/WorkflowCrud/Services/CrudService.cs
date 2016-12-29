@@ -11,11 +11,11 @@ namespace WorkflowCrud.Services
             return "AwaitingApproval";
         }
 
-        public static bool RemovalWatchList()
+        public static string RemovalWatchList()
         {
             Console.WriteLine("RemovalWatchList");
             //todo call remove service
-            return true;
+            return "Completed";
         }
 
         public static bool RemovalCompleted()
